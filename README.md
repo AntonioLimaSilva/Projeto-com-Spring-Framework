@@ -20,7 +20,13 @@ O sistema trata o esquema de senha usando BCrypt
 O sistema permite o upload de arquivos e download de arquivos
 
 # Paginação no Servidor
-Aqui foça uma paginação inteligente, buscando os dados por demanada
+Aqui foço uma paginação inteligente, buscando os dados por demanada
 
 # Validação de Campos
 Uso o Bean Validation para fazer o processo de validação das classes
+
+# Esquema de criação do DB com Flyway
+O banco de dados é criado usando um script que é lido pelo flyway
+
+# Sistema de Chat
+Existe um sistema de CHAT dentro do sistema, para os usuários trocarem mensagens ente si
