@@ -7,7 +7,7 @@ O usuário pode fazer agendamentos diário para uma pessoa
 # Graficos em JavaScript
 O usuário pode visualizador informações que o sistema disponibiliza em tempo real via gráfico
 
-# Relatórios em usando JasperReports
+# Relatórios com JasperReports
 O usuário pode imprimir relatórios e fichas cadastrais
 
 # Formulários de Cadastros
