@@ -20,7 +20,7 @@ O sistema trata o esquema de senha usando BCrypt
 O sistema permite o upload de arquivos e download de arquivos
 
 # Paginação no Servidor
-Aqui foço uma paginação inteligente, buscando os dados por demanada
+Aqui foço uma paginação inteligente, buscando os dados por demanda
 
 # Validação de Campos
 Uso o Bean Validation para fazer o processo de validação das classes
