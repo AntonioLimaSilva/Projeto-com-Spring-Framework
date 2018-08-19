@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<head>
+	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<title>NPJ | Núcleo de Prática Jurídica</title>
+  	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/bootstrap-datetimepicker.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/bootstrap-datetimepicker.min.css}">
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/AdminLTE.min.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/_all-skins.min.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/sweetalert.css}">
+ 
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/npj.css}"/>
+  	
+  	
+  	<link rel="shortcut icon" th:href="@{/images/favicon.jpg}"/>
+</head>
+
+<body class="hold-transition skin-blue fixed sidebar-mini">
+
+<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}" />
+
+<div class="wrapper">
+
+	<div th:replace="layout/fragments/Cabecalho :: main-header"></div>
+	
+	<div th:replace="layout/fragments/MenuLateralEsquerda :: main-sidebar"></div>
+  	
+	<div class="content-wrapper" layout:fragment="conteudo"></div>
+
+	<div th:replace="layout/fragments/Footer :: main-footer"></div>
+
+	<div th:replace="layout/fragments/MenuLateralDireita :: control-sidebar-dark"></div>
+	
+	<div class="control-sidebar-bg"></div>
+</div>
+
+<script th:src="@{/layout/javascripts/jquery-2.2.3.min.js}"></script>
+<script th:src="@{/javascripts/vendors/jquery.mask.min.js}"></script>
+<script th:src="@{/layout/javascripts/bootstrap.min.js}"></script>
+<script th:src="@{/javascripts/vendors/moment.min.js}"></script>
+<script th:src="@{/layout/javascripts/bootstrap-datetimepicker.js}"></script>
+<script th:src="@{/layout/javascripts/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/layout/javascripts/bootstrap-datetimepicker.pt-BR.js}"></script>
+<script th:src="@{/layout/javascripts/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/layout/javascripts/fastclick.js}"></script>
+<script th:src="@{/layout/javascripts/app.min.js}"></script>
+<script th:src="@{/layout/javascripts/demo.js}"></script>
+<script th:src="@{/layout/javascripts/sweetalert-dev.js}"></script>
+<script th:src="@{/layout/javascripts/sweetalert.min.js}"></script>
+<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
+<script th:src="@{/javascripts/npj.js}"></script>
+<th:block layout:fragment="javascript-extra"></th:block>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="pagination (pagina)">
+	<div class="col-sm-12  text-center" th:if="${not pagina.vazia}">
+		<nav>
+			<ul class="center pagination" th:if="${not pagina.vazia}" th:with="paginaAtual=${pagina.atual}">
+		        <li th:class="${pagina.primeira} ? disabled">
+		         	<span th:if='${pagina.primeira}'>← Primeira</span>
+		            <a th:if="${not pagina.primeira}" th:href="${pagina.urlParaPagina(0, pagina.tamanho)}">← Primeira</a>
+		        </li>
+		
+		        <li th:if="${(paginaAtual - 2) > 0}">
+		        	<span th:if="${pagina.primeira}">&laquo;</span>
+		            <a th:href="${pagina.urlParaPagina(paginaAtual - 1, pagina.tamanho)}" title="Anterior">&laquo;</a>
+		        </li>
+		
+		        <th:block th:each="p : ${#numbers.sequence(1, pagina.total)}" th:with="numeroPagina = ${p - 1} ">
+		            <li th:if="${(p + 1 >= paginaAtual and p - 1 <= paginaAtual + 2)}"
+		                th:class="${paginaAtual == numeroPagina} ? 'active deep-purple darken-4' : 'waves-effect' ">
+		                <a th:href="${pagina.urlParaPagina(numeroPagina, pagina.tamanho)}" th:text="${p}">1</a>
+		            </li>
+		        </th:block>
+		
+		        <li th:if="${(paginaAtual + 3) < pagina.total}">
+		        	<span th:if="${pagina.ultima}">&raquo;</span>
+		            <a th:href="${pagina.urlParaPagina(paginaAtual + 1, pagina.tamanho)}" title="Próximo">&raquo;</a>	 
+		        </li>
+		
+		        <li th:class="${pagina.ultima} ? disabled">
+		        	<span th:if="${pagina.ultima}">Última →</span>
+		            <a th:if="${not pagina.ultima}" th:href="${pagina.urlParaPagina(pagina.total - 1, pagina.tamanho)}">Última →</a>
+		        </li>
+		    </ul>
+		</nav>
+	</div>	
+</th:block>
+	
+</html>

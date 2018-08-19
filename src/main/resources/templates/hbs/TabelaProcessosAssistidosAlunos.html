@@ -1,0 +1,29 @@
+<script id="tabela-processos-assistidos-alunos" type="text/x-handlebars-template">
+<div class="table-responsive  bw-tabela-simples" style="margin-top: 15px">
+	<table class="table  table-hover">
+		<thead>
+			<tr>
+				<th class="col-sm-2">Nº processo</th>
+				<th class="col-sm-5">Assistido</th>
+				<th class="col-sm-5">Aluno</th>
+			</tr>
+		</thead>
+				
+		<tbody>
+			{{#if .}}
+				{{#each .}}
+					<tr data-id="{{id}}" class="js-processo-selecionado-assistido-aluno" th:attr="data-url=@{/processos/filtrar}">
+						<td>{{id}}</td>
+						<td>{{assistido}}</td>
+						<td>{{aluno}}</td>
+ 					</tr>
+				{{/each}}
+			{{else}}
+				<tr>
+					<td colspan="3">Nenhuma processo encontrado</td>
+				</tr>
+			{{/if}}
+		</tbody>
+	</table>
+</div>
+</script>

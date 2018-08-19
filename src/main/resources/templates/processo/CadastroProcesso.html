@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Processo | NPJ</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1 th:if="${processo.novo}">Cadastro de processo<small>Visualização</small></h1>
+			<h1 th:unless="${processo.novo}">Edição do processo de Nº [[${processo.id}]]<small>Visualização</small></h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+
+		<section class="content">			
+			<div class="box box-default">
+							
+				<div class="box-header with-border">
+					<div class="row">						
+						<div class="col-sm-10">					        
+					        <button type="button" class="btn btn-link btn-md" data-toggle="modal" data-target="#pesquisaAssistidoProcessoModal">Assistido</button>				        
+					        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaFuncionarioProcessoModal">Professor(a)</button>
+					        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaDocumentoProcessoModal">Documento</button>
+					        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaAcaoProcessoModal">Ação</button>
+					        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaAlunoProcessoModal">Aluno</button>
+				        </div>
+					</div>
+
+					<div class="box-tools pull-right">
+						<a class="btn  btn-default" th:href="@{/processos}" >
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa processos</span>
+						</a>
+					</div>
+				</div>
+					
+				<form id="frmProcesso" method="POST" th:object="${processo}" th:action="@{/processos/novo}">				
+					<div class="box-body">
+					
+						<npj:mensagem />
+						
+						<input type="hidden" th:field="*{id}" />
+						<input id="uuid" type="hidden" th:field="*{uuid}" />
+						
+						<div class="row">	
+							<div class="col-sm-6  form-group bw-required">
+								<label for="id" class="control-label">Nº processo</label> 
+								<input id="id" type="text" class="form-control" readonly="readonly" th:field="*{id}" />
+							</div>
+									
+							<div class="form-group  col-sm-3" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label class="control-label">Esta com aluno</label>
+								<div>
+									<input id="estaComAluno" type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+										data-on-text="Sim" data-off-text="Não" th:field="*{estaComAluno}" />
+								</div>
+							</div>	
+							<div class="form-group  col-sm-3" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label class="control-label">Extinto</label>
+								<div>
+									<input id="extinto" type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+										data-on-text="Sim" data-off-text="Não" th:field="*{extinto}" />
+								</div>
+							</div>
+							
+						</div>
+							
+						<div class="row">									
+							<div class="col-sm-12  form-group" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label for="doFato" class="control-label">Dos fatos</label> 
+								<textarea id="doFato" rows="2" maxlength="200" class="form-control" th:field="*{doFato}"></textarea>
+							</div>
+							
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12  form-group" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label for="doDireito" class="control-label">Do direito</label> 
+								<textarea id="doDireito" rows="2" maxlength="200" class="form-control" th:field="*{doDireito}"></textarea>
+							</div>						
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12  form-group" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label for="doPedido" class="control-label">Do pedido</label> 
+								<textarea id="doPedido" rows="2" maxlength="200" class="form-control" th:field="*{doPedido}"></textarea>
+							</div>
+						</div>
+	
+						<div class="row">
+							<div class="col-sm-12  form-group" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label for="documentosQueFaltam" class="control-label">Documentos que faltam</label> 
+								<textarea id="documentosQueFaltam" rows="2" maxlength="200" class="form-control" 
+									th:field="*{documentosQueFaltam}"></textarea>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12  form-group" sec:authorize="hasRole('ROLE_EXC_PROCESSO')">
+								<label for="localizacao" class="control-label">Localização</label> 
+								<input id="localizacao" type="text" placeholder="Armário 1, Prateleira 2, Processo 3 Ex: (1-2-3)" 
+									size="100" maxlength="100" class="form-control" th:field="*{localizacao}" />
+							</div>	
+								
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12 form-group js-tabela-assistidos-container">							
+								<th:block th:replace="processo/TabelaItensAssistidoProcesso :: tabelaAssistidos"></th:block>
+							</div>							
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12 form-group js-tabela-funcionarios-container">
+								<th:block th:replace="processo/TabelaItensFuncionarioProcesso :: tabelaFuncionarios"></th:block>
+							</div>						
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12 form-group js-tabela-documentos-container">
+								<th:block th:replace="processo/TabelaItensDocumentoProcesso :: tabelaDocumentos"></th:block>
+							</div>							
+						</div>
+						
+						<div class="row">	
+							<div class="col-sm-12 form-group js-tabela-acoes-container">
+								<th:block th:replace="processo/TabelaItensAcaoProcesso :: tabelaAcoes"></th:block>
+							</div>						
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12 form-group js-tabela-alunos-container">
+								<th:block th:replace="processo/TabelaItensAlunoProcesso :: tabelasAlunos"></th:block>
+							</div>
+						</div>	
+					</div>
+	
+					<div class="box-footer">
+						<button class="btn  btn-primary" type="submit" sec:authorize="hasRole('ROLE_CAD_PROCESSO')">[[${processo.novo} ? 'Criar processo' : 'Atualizar']]</button>						
+						<a class="btn btn-info" th:href="@{/processos/relatorio/{id}(id=${processo.id})}"
+							target="_blank" th:unless="${processo.novo}" role="button">Imprimir</a>
+						<a th:href="@{/processos/novo}" class="btn btn-info" role="button">Novo processo</a>
+					</div>
+				</form>
+			</div>	
+			
+			<th:block th:replace="assistido/PesquisaAssistidoProcessoModal :: pesquisaAssistidoProcesso"></th:block>
+			<th:block th:replace="funcionario/PesquisaFuncionarioProcessoModal :: pesquisaFuncionarioProcesso"></th:block>
+			<th:block th:replace="documento/PesquisaDocumentoProcessoModal :: pesquisaDocumentoProcesso"></th:block>
+			<th:block th:replace="acao/PesquisaAcaoProcessoModal :: pesquisaAcaoProcesso"></th:block>
+			<th:block th:replace="aluno/PesquisaAlunoProcessoModal :: pesquisaAlunoProcesso"></th:block>
+					
+		</section>
+	</div>
+
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+		<script th:src="@{/javascripts/processo.pesquisa-rapida-asssistido.js}"></script>
+		<script th:src="@{/javascripts/processo.pesquisa-rapida-funcionario.js}"></script>
+		<script th:src="@{/javascripts/processo.pesquisa-rapida-documento.js}"></script>
+		<script th:src="@{/javascripts/processo.pesquisa-rapida-acao.js}"></script>
+		<script th:src="@{/javascripts/processo.pesquisa-rapida-aluno.js}"></script>
+		<script>
+			$('.js-checkbox').bootstrapSwitch();
+		</script>
+	</th:block>
+</body>
+</html>

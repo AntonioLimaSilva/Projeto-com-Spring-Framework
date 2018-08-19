@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Usuário | NPJ</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+</head>
+<body>
+
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1 th:if="${usuario.novo}">Cadastro de usuário<small>Visualização</small></h1>
+			<h1 th:unless="${usuario.novo}">Edição do usuário: [[${usuario.pessoa.nome}]]<small>Visualização</small></h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+
+		<section class="content">			
+			<div class="box box-default">
+							
+				<div class="box-header with-border" sec:authorize="hasRole('ROLE_PES_USUARIOS')">
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="aw-page-header-controls">
+								<a class="btn  btn-default" th:href="@{/usuarios}">
+									<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa usuários</span>
+								</a>
+							</div>
+						</div>				
+					</div>
+
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+					</div>
+				</div>
+					
+				<form method="POST" th:object="${usuario}" th:action="@{/usuarios/novo}">
+					<div class="box-body">
+					
+						<npj:mensagem />
+						
+						<input type="hidden" th:field="*{id}" />
+					
+						<div class="row">												
+							<div class="col-sm-9  form-group bw-required" npj:classeparaerro="pessoa.id">						
+								<label for="nomePessoa" class="control-label">Nome</label> 
+								<div class="input-group">							
+							    	<input id="nomePessoa" type="text" readonly="readonly" class="form-control" 
+							      		placeholder="Clique na lupa para pesquisar uma pessoa" th:field="*{pessoa.nome}" />
+							      	<input type="hidden" id="idPessoa" th:field="*{pessoa}">
+							      	<span class="input-group-btn">
+								        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
+								        	th:disabled="!${#authorization.expression('hasRole(''ROLE_MASTER'')')}"
+								        	data-toggle="modal" data-target="#pesquisaRapidaPessoas">
+								        	<i class="glyphicon  glyphicon-search"></i>
+								        </button>
+							      	</span>
+							    </div>
+						    </div>				
+						</div>
+						<div class="row">
+							<div class="form-group  col-sm-6 bw-required" npj:classeparaerro="login">
+								<label for="login" class="control-label">Login</label>
+								<input type="text" class="form-control" size="80" maxlength="80" id="login" th:field="*{login}" />
+							</div>
+							<div class="form-group  col-sm-3">
+								<label class="control-label">Status</label>
+								<div>
+									<input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger"
+										th:disabled="!${#authorization.expression('hasRole(''ROLE_MASTER'')')}" 
+										data-on-text="Ativo" data-off-text="Inativo" th:field="*{ativo}" />
+								</div>
+							</div>
+						</div>
+			
+						<div class="row">
+							<div class="form-group  col-sm-3 bw-required" npj:classeparaerro="senha">
+								<label for="senha" class="control-label">Senha</label> 
+								<input type="password" class="form-control" size="100" maxlength="100" id="senha" th:field="*{senha}" />
+							</div>
+							
+							<div class="form-group  col-sm-3" npj:classeparaerro="confirmacaoSenha">
+								<label for="confirmacaoSenha">Confirmação de senha</label> 
+								<input type="password" size="100" maxlength="100" class="form-control" id="confirmacaoSenha" th:field="*{confirmacaoSenha}"/>
+							</div>				
+						</div>
+			
+						<div class="row">
+							<div class="form-group  col-sm-3 bw-required" npj:classeparaerro="grupos">
+								<label class="control-label">Grupos</label> 								
+		  						<div class="checkbox" th:each="grupo : ${grupos}">
+				                    <label th:for="${grupo.id}">
+				                      <input th:id="${grupo.id}" th:disabled="!${#authorization.expression('hasRole(''ROLE_MASTER'')')}" 
+				                      	type="checkbox" th:value="${grupo.id}" th:field="*{grupos}" />
+				                      	[[${grupo.nome}]]
+				                    </label>
+				                </div>		
+							</div>
+						</div>
+					</div>
+				
+					<div class="box-footer">
+						<button class="btn  btn-primary" sec:authorize="hasRole('ROLE_CAD_USUARIO')" type="submit">[[${usuario.novo ? 'Salvar' : 'Atualizar'}]]</button>
+						<a th:href="@{/usuarios/novo}" sec:authorize="hasRole('ROLE_MASTER')" class="btn btn-info" role="button">Novo usuário</a>
+					</div>
+				</form>
+			</div>
+			
+			<th:block th:replace="pessoa/PesquisaRapidaPessoasUsuarioModal :: pesquisaRapidaUsuarios"></th:block>
+			
+		</section>
+	</div>
+
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+		<script th:src="@{/javascripts/pessoa.pesquisa-rapida.js}"></script>
+		<script>
+			$('.js-checkbox').bootstrapSwitch();
+		</script>
+	</th:block>
+</body>
+</html>

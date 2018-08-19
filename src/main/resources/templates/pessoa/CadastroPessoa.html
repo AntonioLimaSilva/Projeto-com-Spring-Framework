@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Pessoa | NPJ</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/upload.min.css}" />
+</head>
+<body>
+
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1 th:if="${pessoa.nova}">Cadastro de pessoas<small>Visualização</small></h1>
+			<h1 th:unless="${pessoa.nova}">Edição de [[${pessoa.nome}]]<small>Visualização</small></h1>
+			
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">			
+			<div class="box box-default">
+							
+				<div class="box-header with-border">
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="aw-page-header-controls">
+								<a class="btn  btn-default" th:href="@{/pessoas}">
+									<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa pessoas</span>
+								</a>
+							</div>
+						</div>
+					
+					</div>
+
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+					</div>
+				</div>
+				<!-- /.box-header -->
+					
+				<form method="POST" th:object="${pessoa}" th:action="${pessoa.nova} ? @{/pessoas/nova} : @{/pessoas/{id}(id=${pessoa.id})}" class="js-formulario-principal">					
+					<div class="box-body">
+					
+						<npj:mensagem />
+						
+						<input type="hidden" th:field="*{id}" />
+					
+						<div class="row">													
+							<div class="col-sm-12  form-group bw-required" npj:classeparaerro="nome">
+								<label for="nome" class="control-label">Nome</label> 
+								<input id="nome" type="text" size="100" maxlength="100" autofocus="autofocus" class="form-control" th:field="*{nome}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-4 form-group bw-required" npj:classeparaerro="pseudonimo">
+								<label for="pseudonimo" class="control-label">Pseudônimo</label> 
+								<input id="pseudonimo" type="text" size="50" maxlength="50" class="form-control" th:field="*{pseudonimo}" />
+							</div>
+							<div class="form-group  col-sm-2">
+								<label class="control-label">Idoso</label>
+								<div>
+									<input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+										data-on-text="Sim" data-off-text="Não" th:field="*{idoso}">
+								</div>
+							</div>
+							<div class="form-group  col-sm-3">
+								<label class="control-label">Portador de Deficiência</label>
+								<div>
+									<input type="checkbox" class="js-checkbox" data-size="small"
+										data-off-color="danger" data-on-text="Sim" data-off-text="Não" th:field="*{portadorDeficiencia}">
+								</div>
+							</div>
+							<div class="form-group  col-sm-3">
+								<label class="control-label">Atendimento Preferêncial</label>
+								<div>
+									<input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+										data-on-text="Sim" data-off-text="Não" th:field="*{atendimentoPreferencial}">
+								</div>
+							</div>							
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12  form-group bw-required" npj:classeparaerro="email">
+								<label for="email" class="control-label">Email</label> <input
+									id="email" type="text" size="100" maxlength="100" class="form-control" th:field="*{email}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label for="foneResidencial" class="control-label">Fone Residencial</label> 
+								<input id="foneResidencial" size="20" maxlength="20" type="text" class="form-control js-phone-number" th:field="*{foneResidencial}" />
+							</div>
+						</div>
+							
+
+						<div class="row">
+							<div class="col-sm-12  form-group bw-required" npj:classeparaerro="foneCelular">
+								<label for="foneCelular" class="control-label">Fone Celular</label> 
+								<input id="foneCelular" type="text" size="20" maxlength="20" class="form-control js-phone-number" th:field="*{foneCelular}" />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label for="sexo" class="control-label">Sexo</label>
+								<div class="radio" th:each="sexo : ${sexos}">									
+									<label th:for="|id_${sexo}|">								
+										<input th:id="|id_${sexo}|" type="radio" th:value="${sexo}" th:field="*{sexo}">
+										[[${sexo.descricao}]]											
+									</label>									
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label class="control-label" for="rg">RG</label> 
+								<input id="rg" type="text" size="20" maxlength="20" class="form-control" th:field="*{rg}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12 form-group bw-required" npj:classeparaerro="cpf">
+								<label class="control-label" for="cpf">CPF</label> 
+								<input id="cpf" type="text" size="20" maxlength="20" class="form-control js-cpf" th:field="*{cpf}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label class="control-label" for="dataNascimento">Data Nascimento</label> 
+								<input id="dataNascimento" type="text" class="form-control js-date" th:field="*{dataNascimento}" />
+							</div>
+						</div>
+							
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label class="control-label" for="naturalidade">Naturalidade</label> 
+								<input id="naturalidade" type="text" size="100" maxlength="100" class="form-control" th:field="*{naturalidade}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label class="control-label" for="nacionalidade">Nacionalidade</label> 
+								<input id="nacionalidade" type="text" size="100" maxlength="100" class="form-control" th:field="*{nacionalidade}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12  form-group">
+								<label class="control-label" for="profissao">Profissão</label> 
+								<input id="profissao" type="text" size="100" maxlength="100" class="form-control" th:field="*{profissao}" />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12  form-group bw-required" npj:classeparaerro="estadoCivil">
+								<label class="control-label" for="estadoCivil">Estado civil</label> 
+								<select id="estadoCivil" class="form-control" th:field="*{estadoCivil}">
+									<option value="">Selecione um estado cívil</option>
+									<option th:each="estadoCivil : ${estadosCivis}" th:value="${estadoCivil}" th:text="${estadoCivil.descricao}">Solteiro</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group  col-lg-12">
+								<ul class="nav nav-tabs  js-abas-pessa">
+									<li role="presentation" class="active"><a href="#endereco">Endereço</a></li>
+									<li role="presentation"><a href="#observacao">Observação</a></li>
+								</ul>
+							</div>
+						</div>
+							
+							<div class="tab-content">
+								<div class="tab-pane active" id="endereco">
+									<div class="row">
+										<div class="form-group  col-sm-12 bw-required" npj:classeparaerro="endereco.logradouro">
+											<label class="control-label" for="logradouro">Logradouro</label>
+											<input id="logradouro" type="text" size="100" maxlength="100" class="form-control" th:field="*{endereco.logradouro}" />
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group  col-sm-12" npj:classeparaerro="endereco.bairro">
+											<label class="control-label" for="bairro">Bairro</label> 
+											<input type="text" class="form-control" size="100" maxlength="100" id="bairro" th:field="*{endereco.bairro}" />
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="form-group  col-sm-12 bw-required" npj:classeparaerro="endereco.cep">
+											<label class="control-label" for="cep">CEP</label> 
+											<input type="text" class="form-control js-cep" id="cep" th:field="*{endereco.cep}" />
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12  form-group bw-required" npj:classeparaerro="endereco.estado.id">
+											<label for="estado" class="control-label">Estado</label> 
+											<select id="estado" class="form-control" th:field="*{endereco.estado}">
+												<option value="">Selecione um estado</option>
+												<option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome}">Ceára</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12  form-group bw-required" npj:classeparaerro="endereco.cidade.id">
+											<label for="cidade" class="control-label">Cidade</label>
+											<div class="bw-field-action">
+												<input type="hidden" id="inputHiddenCidadeSelecionada" th:value="*{endereco.cidade} != null ? *{endereco.cidade.id}" />
+												<select id="cidade" class="form-control" data:url="@{/cidades}" th:field="*{endereco.cidade}">
+												</select>
+												<div class="bw-field-action__icon  js-img-loading" style="display: none">
+													<img th:src="@{/images/mini-loading.gif}" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="tab-pane" id="observacao">
+									<div class="row">
+										<div class="form-group  col-sm-12">
+											<textarea class="form-control" id="observacao" rows="5" maxlength="500" placeholder="Alguma observação para essa pessoa?"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						<div class="row">
+							<div class="form-group  col-sm-12">
+								<input type="hidden" th:field="*{foto}" />
+								<input type="hidden" th:field="*{contentType}" />
+								<input type="hidden" th:field="*{novaFoto}" />
+								<label class="control-label">Foto</label>
+
+								<div class="js-container-foto-pessoa"
+									th:attr="data-url-fotos=@{/fotos}">
+									<div id="upload-drop" class="bw-upload">
+										<i class="glyphicon  glyphicon-cloud-upload"></i> <span>Arraste
+											a foto aqui ou </span> <a class="bw-upload-form-file">selecione
+											<input id="upload-select" type="file"
+											accept=".jpg,.jpeg,.png" />
+										</a>
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->						
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">						
+						<div class="btn-group" sec:authorize="hasRole('ROLE_CAD_PESSOA')">
+						  <button type="submit" class="btn  btn-primary  js-submit-btn" data:acao="salvar">[[${pessoa.nova} ? 'Salvar' : 'Atualizar']]</button>
+						  <button type="button" class="btn  btn-primary  dropdown-toggle" data-toggle="dropdown">
+						    <span class="caret"></span>
+						  </button>
+						  
+						  <ul class="dropdown-menu">
+						    <li><a href="#" class="js-submit-btn" data:acao="salvarTransformarAssistido">Salvar e transformar em assistido</a></li>
+						    <li><a href="#" class="js-submit-btn" data:acao="salvarTransformarReu">Salvar e transformar em réu</a></li>
+						  </ul>
+						</div>
+						
+						<a th:href="@{/pessoas/nova}" sec:authorize="hasRole('ROLE_CAD_PESSOA')" class="btn btn-info" role="button">Nova pessoa</a>
+					</div>
+				</form>
+			</div>
+			<!-- /.box -->
+		</section>
+		<!-- /.content -->
+		
+		<th:block th:replace="hbs/FotoPessoa"></th:block>
+		
+	</div>
+
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+		<script th:src="@{/javascripts/pessoa.combo-estado-cidade.js}"></script>
+		<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+		<script th:src="@{/javascripts/vendors/upload.min.js}"></script>
+		<script th:src="@{/javascripts/pessoa.upload-foto.js}"></script>
+		<script th:src="@{/javascripts/pessoa.botoes-submit.js}"></script>
+		<script>
+			$('.js-checkbox').bootstrapSwitch();
+
+			$(function() {
+				$('.js-abas-pessa a').click(function(e) {
+					e.preventDefault();
+					$(this).tab('show');
+				});
+			})
+		</script>
+	</th:block>
+</body>
+</html>

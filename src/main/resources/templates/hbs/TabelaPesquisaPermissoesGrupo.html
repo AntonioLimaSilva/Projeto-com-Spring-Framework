@@ -1,0 +1,25 @@
+<script id="tabela-pesquisa-permissoes-grupo" type="text/x-handlebars-template">
+<div class="table-responsive  bw-tabela-simples" style="margin-top: 15px">
+	<table class="table  table-hover">
+		<thead>
+			<tr>
+				<th class="col-sm-12">Nome</th>
+			</tr>
+		</thead>
+				
+		<tbody>
+			{{#if .}}
+				{{#each .}}
+					<tr>
+						<td>{{nome}}</td>
+ 					</tr>
+				{{/each}}
+			{{else}}
+				<tr>
+					<td colspan="1">Nenhuma permissão encontrada</td>
+				</tr>
+			{{/if}}
+		</tbody>
+	</table>
+</div>
+</script>

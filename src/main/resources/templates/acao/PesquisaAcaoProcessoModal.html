@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<div class="modal  fade" id="pesquisaAcaoProcessoModal" tabindex="-1" role="dialog" th:fragment="pesquisaAcaoProcesso">
+ 	<div class="modal-dialog">
+   		<div class="modal-content">
+   			<div class="modal-header">
+       			<button type="button" class="close" data-dismiss="modal"><i>&times;</i></button>
+        		<h4 class="modal-title">Pesquisa rápida de Acaos</h4>
+      		</div>
+      		
+   			<div class="modal-body">
+  			
+   				<form id="form" th:action="@{/acoes}">
+		        	<div class="form-group">
+		            	<label class="control-label" for="nomeAcaoModal">Nome</label>
+	                	<select id="nomeAcaoModal" class="form-control">
+	                		<option value="">Selecione</option>
+	                		<option th:each="acao : ${acoes}" th:value="${acao.id}" th:text="${acao.nome}">Selecione</option>
+	                	</select>
+		            </div>
+		            
+		            <a href="javascript:;" class="btn  btn-default" data-dismiss="modal">Cancelar</a>	
+		        </form>
+		        
+     		</div>
+   		</div>
+ 	</div>
+</div>
+	
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Mensagem | NPJ</title>
+</head>
+<body>
+
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Cadastro de mensagem<small>Visualização</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">			
+			<div class="box box-default">					
+				<form method="POST" th:object="${mensagem}" th:action="@{/mensagens/nova}">
+					<div class="box-body">
+					
+						<npj:mensagem />
+						
+						<input type="hidden" th:field="*{id}" />
+					
+						<div class="row">												
+							<div class="col-sm-6  form-group bw-required" npj:classeparaerro="usuarioPassivo.id">							
+								<label for="nomeUsuario" class="control-label">Nome</label> 
+								<div class="input-group">							
+							    	<input id="nomeUsuario" type="text" readonly="readonly" class="form-control" 
+								    	placeholder="Clique na lupa para pesquisar uma pessoa" th:field="*{usuarioPassivo.login}" />
+							      	<input type="hidden" id="idUsuario" th:field="*{usuarioPassivo}">
+							      	<span class="input-group-btn">
+								        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
+									    	data-toggle="modal" data-target="#pesquisaRapidaUsuarios">
+									        	<i class="glyphicon  glyphicon-search"></i>
+								        </button>
+							      	</span>
+							    </div>
+						    </div>
+						    
+						    <div class="col-sm-6  form-group" npj:classeparaerro="titulo">
+						    	<label for="titulo" class="control-label">Título da mensagem</label>
+						    	<input id="titulo" type="text" class="form-control" size="49" maxlength="49" th:field="*{titulo}" />
+						    </div>			
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12  form-group" npj:classeparaerro="conteudo">
+								<label for="conteudo">Conteúdo da mensagem</label> 
+								<textarea id="conteudo" rows="2" maxlength="240" class="form-control" th:field="*{conteudo}"  />
+							</div>
+						</div>	
+						
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<button class="btn btn-primary" type="submit">Salvar</button>
+					</div>
+				</form>
+			</div>
+			<!-- /.box -->
+			
+			<th:block th:replace="usuario/PesquisaRapidaUsuariosModal :: pesquisaRapidaMensagemUsuarios"></th:block>
+			
+		</section>
+		<!-- /.content -->
+	</div>
+
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/usuario.pesquisa-rapida.js}"></script>
+	</th:block>
+</body>
+</html>

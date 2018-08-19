@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/blue.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/morris.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/jquery-jvectormap-1.2.2.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/datepicker3.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/daterangepicker.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/bootstrap3-wysihtml5.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/fullcalendar.css}">
+	<link rel="stylesheet" media="print" th:href="@{/stylesheets/vendors/fullcalendar.print.css}">
+	
+	<title>Home</title>
+</head>
+<body>
+
+	<div class="content-wrapper" layout:fragment="conteudo">
+
+		<!-- Main content -->
+		<section class="content-header">
+			<h1>
+				Dashboard <small>Control panel</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li class="active">Dashboard</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<!-- Small boxes (Stat box) -->
+			<div class="row">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>[[${totalPessoas}]]</h3>
+
+							<p>Total de pessoas</p>
+						</div>
+						<div class="icon">
+							<i class="ion-ios-people-outline"></i>
+						</div>
+						<a href="javascript:;" class="small-box-footer">More info <i
+							class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+				<!-- ./col -->
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3>[[${totalAssistidos}]]</h3>
+
+							<p>Total assistidos</p>
+						</div>
+						<div class="icon">
+							<i class="ion-ios-people-outline"></i>
+						</div>
+						<a href="javascript:;" class="small-box-footer">More info <i
+							class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+				<!-- ./col -->
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-yellow">
+						<div class="inner">
+							<h3>[[${totalFuncionarios}]]</h3>
+
+							<p>Total funcionários</p>
+						</div>
+						<div class="icon">
+							<i class="ion-ios-people-outline"></i>
+						</div>
+						<a href="javascript:;" class="small-box-footer">More info <i
+							class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+				<!-- ./col -->
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-red">
+						<div class="inner">
+							<h3>[[${totalReus}]]</h3>
+
+							<p>Total de réus</p>
+						</div>
+						<div class="icon">
+							<i class="ion-ios-people-outline"></i>
+						</div>
+						<a href="javascript:;" class="small-box-footer">More info <i
+							class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+				<!-- ./col -->
+			</div>
+			<!-- /.row -->
+			
+			<!-- Main content -->
+			<section class="content">			
+				<div class="box box-default">
+					<div class="row">
+						<div class="col-sm-12" id="agenda"></div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Main row -->
+			<div class="row">
+				<!-- Left col -->
+				<section class="col-lg-6 connectedSortable">
+					<!-- Custom tabs (Charts with tabs)-->
+					<div class="nav-tabs-custom">
+						<!-- Tabs within a box -->
+						<ul class="nav nav-tabs pull-right">
+							<li class="active"><a href="#revenue-chart"
+								data-toggle="tab">Area</a></li>
+							
+							<canvas id="graficoProcessosAtendidoNoMes" height="160"></canvas>
+							
+						</ul>
+					</div>
+					<!-- /.nav-tabs-custom -->
+
+				</section>
+				<!-- /.Left col -->
+				<!-- right col (We are only adding the ID to make the widgets sortable)-->
+				<section class="col-lg-6 connectedSortable">
+					<!-- Custom tabs (Charts with tabs)-->
+					<div class="nav-tabs-custom">
+						<!-- Tabs within a box -->
+						<ul class="nav nav-tabs pull-right">
+							<li class="active"><a href="#revenue-chart"
+								data-toggle="tab">Area</a></li>
+								
+							<canvas id="graficoAssistidoNoMes" height="160"></canvas>
+							
+						</ul>
+						
+					</div>
+					<!-- /.nav-tabs-custom -->
+
+				</section>
+				<!-- right col -->
+			</div>
+			<!-- /.row (main row) -->
+			
+			<div class="modal fade" id="visAgendaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title text-center">Dados do agendamento</h4>
+						</div>
+						<div class="modal-body">
+							<dl class="dl-horizontal">
+								<dt>Assistido:</dt>
+								<dd id="assistido"></dd>
+								<dt>Data Início:</dt>
+								<dd id="start"></dd>
+								<dt>Data Fim:</dt>
+								<dd id="end"></dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="cadAgendaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title text-center">Novo agendamento</h4>
+						</div>
+						<div class="modal-body">
+							<div class="alert  alert-danger  alert-dismissible hidden js-mensagem-erro" role="alert"></div>
+							<form class="form-horizontal" method="POST" th:action="@{/agendas/nova}">
+								<div class="form-group">
+									<label for="assistido" class="col-sm-2 control-label">Assistido</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="cadAssistido" placeholder="Nome do assistido">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="color" class="col-sm-2 control-label">Cor</label>
+									<div class="col-sm-10">
+										<select class="form-control" id="color">
+											<option value="">Selecione</option>			
+											<option style="color:#FFD700;" value="#FFD700">Amarelo</option>
+											<option style="color:#0071c5;" value="#0071c5">Azul Turquesa</option>
+											<option style="color:#FF4500;" value="#FF4500">Laranja</option>
+											<option style="color:#8B4513;" value="#8B4513">Marrom</option>	
+											<option style="color:#1C1C1C;" value="#1C1C1C">Preto</option>
+											<option style="color:#436EEE;" value="#436EEE">Royal Blue</option>
+											<option style="color:#A020F0;" value="#A020F0">Roxo</option>
+											<option style="color:#40E0D0;" value="#40E0D0">Turquesa</option>										
+											<option style="color:#228B22;" value="#228B22">Verde</option>
+											<option style="color:#8B0000;" value="#8B0000">Vermelho</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="dataInicio" class="col-sm-2 control-label">Data Inicial</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control js-datetime" readonly="readonly" id="dataInicio">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="dataFim" class="col-sm-2 control-label">Data Final</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control js-datetime" readonly="readonly" id="dataFim">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-success js-salvar-agenda-btn">Salvar</button>
+										<a href="javascript:;" class="btn  btn-default" data-dismiss="modal">Cancelar</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</section>
+	</div>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/Chart.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/fullcalendar.js}"></script>
+	<script th:src="@{/javascripts/vendors/locale-all.js}"></script>	
+	<script th:src="@{/javascripts/dashboard.graficos.js}"></script>
+	<script th:src="@{/javascripts/dashboard.agenda.js}"></script>
+</th:block>
+</body>
+</html>

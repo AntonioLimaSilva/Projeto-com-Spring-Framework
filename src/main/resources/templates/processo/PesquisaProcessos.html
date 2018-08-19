@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Pesquisa de processos</title>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Pesquisa de processos<small>Visualização</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/processos/novo}"> <i
+							class="glyphicon  glyphicon-plus-sign"></i> <span
+							class="hidden-xs  hidden-sm">Novo</span>
+						</a>
+					</div>
+
+					<div class="box-tools pull-right">
+						<button class="btn  btn-default" type="button" data-toggle="modal"
+							data-target="#pesquisaProcessosAssistidoOuAlunoModal">Pesquisar</button>
+					</div>
+				</div>
+				<!-- /.box-header -->
+			</div>
+			<!-- /.box -->
+
+			<!-- html da consulta de processo com membros -->
+			<div id="container-consulta-membros-processo">
+				<npj:timeLine attrProcesso="${processo}" attrItensAssistido="${itensAssistidosProcesso}"
+					attrItensFuncionario="${itensFuncionariosProcesso}" attrItensDocumento="${itensDocumentosProcesso}"
+					attrItensAcao="${itensAcoesProcesso}" attrItensAluno="${itensAlunosProcesso}" />
+			</div>
+
+			<th:block th:replace="processo/PesquisaProcessosAssistidoOuAlunoModal :: pesquisaProcessosAssistidoOuAlunoModal"></th:block>
+
+		</section>
+	</div>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/processo.pesquisa-assistido-ou-aluno.js}"></script>
+		<script th:src="@{/javascripts/npj.dialogo-excluir.js}"></script>
+	</th:block>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<div class="modal  fade" id="pesquisaPermissoesGrupoModal" tabindex="-1" role="dialog" th:fragment="pesquisaPermissoesGrupo">
+ 	<div class="modal-dialog"> 
+	 	<div class="modal-content">  		
+	   		<div class="modal-header">
+	      		<button type="button" class="close" data-dismiss="modal"><i>&times;</i></button>
+	       		<h4 class="modal-title">Permissões</h4>
+	      	</div>
+	      		
+	 		<div class="modal-body js-conteudo-modal">
+		 		<th:block th:replace="hbs/TabelaPesquisaPermissoesGrupo"></th:block>		
+	   		</div>	
+	 	</div>
+ 	</div>
+</div>
+	
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Aluno | NPJ</title>
+</head>
+<body>
+
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1 th:if="${aluno.novo}">Cadastro de aluno<small>Visualização</small></h1>
+			<h1 th:unless="${aluno.novo}">Edição do aluno: [[${aluno.pessoa.nome}]]<small>Visualização</small></h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">			
+			<div class="box box-default">
+							
+				<div class="box-header with-border">
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="aw-page-header-controls">
+								<a class="btn  btn-default" th:href="@{/alunos}">
+									<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa alunos</span>
+								</a>
+							</div>
+						</div>
+					
+					</div>
+
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+					</div>
+				</div>
+				<!-- /.box-header -->
+					
+				<form method="POST" th:object="${aluno}" th:action="@{/alunos/novo}">
+					<div class="box-body">
+					
+						<npj:mensagem />
+						
+						<input type="hidden" th:field="*{id}" />
+					
+						<div class="row">												
+							<div class="col-sm-9  form-group bw-required" npj:classeparaerro="pessoa.id">							
+								<label for="nomePessoa" class="control-label">Nome</label> 
+								<div class="input-group">							
+							    	<input id="nomePessoa" type="text" readonly="readonly" class="form-control" 
+								    	placeholder="Clique na lupa para pesquisar uma pessoa" th:field="*{pessoa.nome}" />
+							      	<input type="hidden" id="idPessoa" th:field="*{pessoa}">
+							      	<span class="input-group-btn">
+								        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
+									    	data-toggle="modal" data-target="#pesquisaRapidaPessoas">
+									        	<i class="glyphicon  glyphicon-search"></i>
+								        </button>
+							      	</span>
+							    </div>
+						    </div>
+						    
+						    <div class="col-sm-3  form-group" npj:classeparaerro="matricula">
+						    	<label for="matricula" class="control-label">Matrícula</label>
+						    	<input id="matricula" type="text" class="form-control" size="20" maxlength="20" th:field="*{matricula}" />
+						    </div>			
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-12  form-group" npj:classeparaerro="cabine.id">
+								<label for="cabine">Cabines</label> 
+								<select id="cabine" class="form-control" th:field="*{cabine}">
+									<option value="">Selecione uma cabine</option>
+									<option th:each="cabine : ${cabines}" th:value="${cabine.id}" th:text="${cabine.nome}">Cabine 01</option>
+								</select>
+							</div>
+						</div>	
+						
+						<div class="row">
+							<div class="col-sm-12  form-group" npj:classeparaerro="equipe.id">
+								<label for="equipe">Equipe</label> 
+								<select id="equipe" class="form-control" th:field="*{equipe}">
+									<option value="">Selecione uma equipe</option>
+									<option th:each="equipe : ${equipes}" th:value="${equipe.id}" th:text="${equipe.nome}">Cabine 01</option>
+								</select>
+							</div>
+						</div>	
+								
+						<div class="row">
+							<div class="col-sm-12  form-group" npj:classeparaerro="expediente.id">
+								<label for="expediente">Expediente</label> 
+								<select id="expediente" class="form-control" th:field="*{expediente}">
+									<option value="">Selecione um expediente</option>
+									<option th:each="expediente : ${expedientes}" th:value="${expediente.id}" 
+										th:text="|${expediente.funcionario.pessoa.nome} - ${expediente.turmas.toString()}|">Cabine 01</option>
+								</select>
+							</div>
+						</div>	
+						
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<button class="btn btn-primary" sec:authorize="hasRole('ROLE_CAD_ALUNO')" type="submit">[[${aluno.novo ? 'Salvar' : 'Atualizar'}]]</button>
+					</div>
+				</form>
+			</div>
+			<!-- /.box -->
+			
+			<th:block th:replace="pessoa/PesquisaRapidaPessoasAlunoModal :: pesquisaRapidaAlunos"></th:block>
+			
+		</section>
+		<!-- /.content -->
+	</div>
+
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/pessoa.pesquisa-rapida.js}"></script>
+	</th:block>
+</body>
+</html>

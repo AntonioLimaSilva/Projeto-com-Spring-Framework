@@ -1,0 +1,21 @@
+<script id="tabela-pesquisa-mensagens" type="text/x-handlebars-template">				
+	{{#if .}}
+		{{#each resposta}}
+			<li><!-- start message -->
+            	<a href="javascript:;" class="js-link-mensagem-selecionada">
+					<input type="hidden" value="{{id}}" data:url="@{/mensagens/filtrar}"/>
+                	<div class="pull-left">
+                       <img th:src="@{/fotos/thumbnail.{{foto}}}" class="img-circle" alt="User Image"> 
+                	</div>
+                 	<h4>
+                    	{{titulo}}					
+                    	<small><i class="fa fa-clock-o"></i> Há {{diasCriacao}} dias</small>						
+                 	</h4>
+                	<p>{{conteudo}}</p>
+            	</a>
+        	</li>
+		{{/each}}
+	{{else}}				
+		<p>Nenhuma mensagem encontrada</p>
+	{{/if}}
+</script>

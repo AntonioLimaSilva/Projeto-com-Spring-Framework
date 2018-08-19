@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:npj="http://www.npj.com.br"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<body>
+	<aside class="main-sidebar" th:fragment="main-sidebar">
+		<section class="sidebar">
+			<div class="user-panel">
+				<div class="pull-left image">
+					<img th:src="@{/fotos/thumbnail.{foto}(foto=${#authentication.principal.usuario.pessoa.fotoOuMock})}"
+						class="img-thumbnail" alt="User Image">
+				</div>
+				<div class="pull-left info">
+					<p>[[${#authentication.principal.usuario.login}]]</p>
+					<a href="javascript:;"><i class="fa fa-circle text-success"></i> Online</a>
+				</div>
+			</div>
+			<form action="javascript:;" method="get" class="sidebar-form">
+				<div class="input-group">
+					<input type="text" name="q" class="form-control"
+						placeholder="Pesquisar..."> <span class="input-group-btn">
+						<button type="submit" name="search" id="search-btn"
+							class="btn btn-flat">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+			</form>
+
+			<ul class="sidebar-menu">
+				<li class="header">Menu Princípal</li>
+				<li class="treeview">
+					<a th:href="@{/}"> <i class="fa fa-dashboard"></i><span>Dashboard</span> 
+						<span class="pull-right-container">
+							<small class="label pull-right bg-green">NPJ</small>
+						</span>
+					</a>
+				</li>
+
+				<li class="treeview" sec:authorize="hasRole('ROLE_CAD_PESSOA')">
+					<a href="javascript:;"> <i class="fa fa-edit"></i>
+						<span>Cadastros</span> <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a sec:authorize="hasRole('ROLE_CAD_PESSOA')" th:href="@{/pessoas/nova}"><i class="fa fa-circle-o"></i>Nova Pessoa</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_PROCESSO')" th:href="@{/processos/novo}"><i class="fa fa-circle-o"></i>Novo Processo</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_DISCIPLINA')" th:href="@{/disciplinas/nova}"><i class="fa fa-circle-o"></i>Nova Disciplina</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_ASSISTIDO')" th:href="@{/assistidos/novo}"><i class="fa fa-circle-o"></i>Novo Assistido</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_ALUNO')" th:href="@{/alunos/novo}"><i class="fa fa-circle-o"></i>Novo Aluno</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_FUNCIONARIO')" th:href="@{/funcionarios/novo}"><i class="fa fa-circle-o"></i>Novo Funcionário</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_DOCUMENTO')" th:href="@{/documentos/novo}"><i class="fa fa-circle-o"></i>Novo Documento</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_REU')" th:href="@{/reus/novo}"><i class="fa fa-circle-o"></i>Novo Réu</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_CARGA')" th:href="@{/cargas/nova}"><i class="fa fa-circle-o"></i>Nova Carga</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" sec:authorize="hasRole('ROLE_PES_PESSOAS')">
+					<a href="javascript:;"> <i class="fa fa-table"></i>
+						<span>Pesquisas</span> <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a sec:authorize="hasRole('ROLE_PES_PESSOAS')" th:href="@{/pessoas}"><i class="fa fa-circle-o"></i>Pesquisa de Pessoas</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_PROCESSOS')" th:href="@{/processos}"><i class="fa fa-circle-o"></i>Pesquisa de Processos</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_DISCIPLINAS')" th:href="@{/disciplinas}"><i class="fa fa-circle-o"></i>Pesquisa de Disciplinas</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_ASSISTIDOS')" th:href="@{/assistidos}"><i class="fa fa-circle-o"></i>Pesquisa de Assistidos</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_ALUNOS')" th:href="@{/alunos}"><i class="fa fa-circle-o"></i>Pesquisa de Alunos</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_FUNCIONARIOS')" th:href="@{/funcionarios}"><i class="fa fa-circle-o"></i>Pesquisa de Funcionários</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_DOCUMENTOS')" th:href="@{/documentos}"><i class="fa fa-circle-o"></i>Pesquisa de Documentos</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_REUS')" th:href="@{/reus}"><i class="fa fa-circle-o"></i>Pesquisa de Réus</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_CARGAS')" th:href="@{/cargas}"><i class="fa fa-circle-o"></i>Pesquisa de Cargas</a></li>
+					</ul>
+				</li>
+				
+				
+				<li class="treeview" sec:authorize="hasRole('ROLE_CAD_EXPEDIENTE')">
+					<a href="javascript:;"> <i class="fa fa-group"></i>
+						<span>Expedientes</span> <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a sec:authorize="hasRole('ROLE_CAD_EXPEDIENTE')" th:href="@{/expedientes/novo}"><i class="fa fa-circle-o"></i>Novo Expediente</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_TURMA')" th:href="@{/turmas/nova}"><i class="fa fa-circle-o"></i>Nova Turma</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_TURMAS')" th:href="@{/turmas}"><i class="fa fa-circle-o"></i>Pesquisa de Turmas</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_EXPEDIENTES')" th:href="@{/expedientes}"><i class="fa fa-circle-o"></i>Pesquisa de Expedientes</a></li>
+						
+					</ul>
+				</li>
+				
+				<li class="treeview" sec:authorize="hasRole('ROLE_CAD_USUARIO')">
+					<a href="javascript:;"> <i class="fa fa-cogs"></i>
+						<span>Configurações</span> <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a sec:authorize="hasRole('ROLE_CAD_USUARIO')" th:href="@{/usuarios/novo}"><i class="fa fa-circle-o"></i>Novo Usuário</a></li>
+						<li><a sec:authorize="hasRole('ROLE_CAD_GRUPO')" th:href="@{/grupos/novo}"><i class="fa fa-circle-o"></i>Novo Gurpo</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_USUARIOS')" th:href="@{/usuarios}"><i class="fa fa-circle-o"></i>Pesquisa de Usuários</a></li>
+						<li><a sec:authorize="hasRole('ROLE_PES_GRUPOS')" th:href="@{/grupos}"><i class="fa fa-circle-o"></i>Pesquisa de Grupos</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview">
+					<a th:href="@{/mensagens/nova}"> <i class="fa fa-commenting-o"></i>
+						<span>Chat</span> <span class="pull-right-container">
+							<small class="label pull-right bg-blue">NPJ</small>
+						</span>
+					</a>
+				</li>
+			</ul>
+		</section>
+	</aside>
+</body>
+</html>

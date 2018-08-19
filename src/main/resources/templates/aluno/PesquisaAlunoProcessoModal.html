@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<div class="modal  fade" id="pesquisaAlunoProcessoModal" tabindex="-1" role="dialog" th:fragment="pesquisaAlunoProcesso">
+ 	<div class="modal-dialog">
+   		<div class="modal-content">
+   			<div class="modal-header">
+       			<button type="button" class="close" data-dismiss="modal"><i>&times;</i></button>
+        		<h4 class="modal-title">Pesquisa rápida de aluno</h4>
+      		</div>
+      		
+   			<div class="modal-body">
+   				<div class="alert  alert-danger  alert-dismissible  hidden  js-mensagem-erro" role="alert">
+					<button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true">&times;</span></button>
+					<div><i class="fa  fa-exclamation-circle"></i>Informe pelo menos 4 letras na pesquisa</div>
+				</div>
+   			
+   				<form id="form" th:action="@{/alunos}">
+		        	<div class="form-group">
+		            	<label class="control-label" for="nomePessoaAlunoModal">Nome</label>
+	                	<input id="nomePessoaAlunoModal" type="text" size="100" maxlength="100" class="form-control" />
+		            </div>
+		            
+		            <button type="submit" class="btn  btn-primary js-pesquisa-aluno-processo-btn">Pesquisar</button>
+		            <a href="javascript:;" class="btn  btn-default" data-dismiss="modal">Cancelar</a>	
+		        </form>
+		        
+		        <div id="containerTabelaPesquisaRapidaAlunos"></div>
+     		</div>
+   		</div>
+ 	</div>
+ 	<th:block th:replace="hbs/TabelaPesquisaRapidaPessoasProcesso"></th:block>
+</div>
+	
+</html>

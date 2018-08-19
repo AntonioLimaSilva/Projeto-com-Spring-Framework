@@ -1,0 +1,31 @@
+<script id="tabela-processos-assistido" type="text/x-handlebars-template">
+<div class="table-responsive  bw-tabela-simples" style="margin-top: 15px">
+	<table class="table  table-hover">
+		<thead>
+			<tr>
+				<th class="col-sm-2">Nº processo</th>
+				<th class="col-sm-4">Localização</th>
+				<th class="col-sm-4">Nome do assistido</th>
+				<th class="col-sm-2">CPF</th>
+			</tr>
+		</thead>
+				
+		<tbody>
+			{{#if .}}
+				{{#each .}}
+					<tr data-id="{{idProcesso}}" class="js-processo-selecionado-assistido">
+						<td>{{idProcesso}}</td>
+						<td>{{localizacao}}</td>
+						<td>{{nome}}</td>						
+						<td>{{cpf}}</td>
+ 					</tr>
+				{{/each}}
+			{{else}}
+				<tr>
+					<td colspan="4">Nenhuma processo com assistido encontrado</td>
+				</tr>
+			{{/if}}
+		</tbody>
+	</table>
+</div>
+</script>

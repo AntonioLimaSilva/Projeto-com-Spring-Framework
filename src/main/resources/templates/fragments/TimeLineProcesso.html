@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	
+<th:block th:fragment="timeLine (processo, itensAssistidosProcesso, itensFuncionariosProcesso, itensDocumentosProcesso, itensAcoesProcesso, itensAlunosProcesso)">
+	<!-- row -->
+	<div class="row js-linha-time-line">
+		<div class="col-md-12">
+			<!-- The time line -->
+			<ul class="timeline">
+				<!-- timeline time label -->
+				<li class="time-label">
+					<span class="bg-gray">Número do processo: <strong>[[${processo.id}]]</strong></span>
+				</li>
+				<!-- /.timeline-label -->
+				
+				<!-- timeline item -->
+				<li>
+					<i class="fa fa-balance-scale"></i>
+
+					<div class="timeline-item">
+						<span class="time"><i class="fa fa-clock-o"></i> [[${{processo.dataCriacao}}]]</span>
+
+						<h3 class="timeline-header">
+							<a href="javascript:;">Sobre o processo</a>
+						</h3>
+
+						<div class="timeline-body"><span class="label  label-default">Localização: </span>[[${processo.localizacao}]]</div>
+						<div class="timeline-footer">
+							<a class="btn btn-primary btn-xs" sec:authorize="hasRole('ROLE_EDI_PROCESSO')" th:href="@{/processos/{id}(id=${processo.id})}">Editar</a> 
+							<a class="btn btn-danger btn-xs js-excluir-btn" sec:authorize="hasRole('ROLE_EXC_PROCESSO')" data:url="@{/processos/{id}(id=${processo.id})}"
+								data:objeto="${processo.id}">Excluir</a>
+							<a class="btn btn-info btn-xs" th:href="@{/processos/relatorio/{id}(id=${processo.id})}"
+								target="_blank">Imprimir</a>
+						</div>
+					</div>
+				</li>
+				<!-- END timeline item -->
+
+				<!-- timeline item -->
+				<li th:each="itemAssistido : ${itensAssistidosProcesso}">
+					<img th:src="@{/fotos/thumbnail.{foto}(foto=${itemAssistido.assistido.pessoa.fotoOuMock})}"
+						class="fa img-responsive" />
+
+					<div class="timeline-item">
+						<h3 class="timeline-header no-border">
+							<strong>Assistido:</strong> <a href="javascript:;">[[${itemAssistido.assistido.pessoa.nome}]] </a>
+						</h3>
+
+						<div class="timeline-body">
+							<span class="label  label-default">CPF: </span><span>[[${itemAssistido.assistido.pessoa.cpf}]]</span><br>
+							<span class="label  label-default">Email: </span> <span> [[${itemAssistido.assistido.pessoa.email}]]</span><br> 
+							<span class="label  label-default">Tipo parte: </span> <span> [[${itemAssistido.tipoParte.descricao}]]</span><br>
+						</div>
+					</div>
+				</li>
+				<!-- END timeline item -->
+
+				<!-- timeline item -->
+				<li th:each="itemFuncionario : ${itensFuncionariosProcesso}">
+					<img th:src="@{/fotos/thumbnail.{foto}(foto=${itemFuncionario.funcionario.pessoa.fotoOuMock})}"
+						class="fa img-responsive" />
+
+					<div class="timeline-item">
+						<h3 class="timeline-header no-border">
+							<strong>Professor(a): </strong><a href="javascript:;">[[${itemFuncionario.funcionario.pessoa.nome}]]</a>
+						</h3>
+
+						<div class="timeline-body">
+							<span class="label  label-default">CPF: </span><span> [[${itemFuncionario.funcionario.pessoa.cpf}]]</span><br>
+							<span class="label  label-default">Email: </span> [[${itemFuncionario.funcionario.pessoa.email}]]</span><br> 
+							<span class="label  label-default">Tipo participação: </span><span> [[${itemFuncionario.tipoParticipacao.descricao}]]</span><br>
+						</div>
+					</div>
+				</li>
+				<!-- END timeline item -->
+				
+				<!-- timeline item -->
+				<li th:each="itemAluno : ${itensAlunosProcesso}">
+					<img th:src="@{/fotos/thumbnail.{foto}(foto=${itemAluno.aluno.pessoa.fotoOuMock})}"
+						class="fa img-responsive" />
+
+					<div class="timeline-item">
+						<h3 class="timeline-header no-border">
+							<strong>Aluno: </strong><a href="javascript:;">[[${itemAluno.aluno.pessoa.nome}]]</a>
+						</h3>
+
+						<div class="timeline-body">
+							<span class="label  label-default">CPF: </span><span> [[${itemAluno.aluno.pessoa.cpf}]]</span><br> 
+							<span class="label  label-default">Email: </span><span> [[${itemAluno.aluno.pessoa.email}]]</span><br>
+						</div>
+					</div>								
+				</li>
+				<!-- END timeline item -->
+
+				<!-- timeline item -->
+				<li th:each="itemDocumento : ${itensDocumentosProcesso}"><i
+					class="fa fa-folder-open"></i>
+					<div class="timeline-item">
+						<h3 class="timeline-header no-border">
+							<strong>Documento: </strong><a th:href="@{/documentos/local/{nome}(nome=${itemDocumento.documento.nome})}" target="_blank">[[${itemDocumento.documento.nome}]]</a>
+						</h3>
+
+						<div class="timeline-body">
+							<span class="label  label-default">Descricao: </span><span> [[${itemDocumento.documento.descricao}]]</span><br>
+						</div>
+					</div>
+				</li>
+				<!-- END timeline item -->
+
+				<!-- timeline item -->
+				<li th:each="itemAcao : ${itensAcoesProcesso}"><i
+					class="fa fa-clipboard"></i>
+
+					<div class="timeline-item">
+						<h3 class="timeline-header no-border">
+							<strong>Tipo da ação: </strong><a href="javascript:;">[[${itemAcao.acao.nome}]]</a>
+						</h3>
+					</div>
+				</li>
+				<!-- END timeline item -->
+
+				<li><i class="fa fa-clock-o bg-gray"></i></li>
+			</ul>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</th:block>
+
+</html>

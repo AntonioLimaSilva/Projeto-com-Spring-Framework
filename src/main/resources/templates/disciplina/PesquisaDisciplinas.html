@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Pesquisa de disciplinas</title>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Pesquisa de disciplinas<small>Visualização</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+		
+		<!-- Main content -->
+	    <section class="content">
+	      <div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="aw-page-header-controls">
+										<a class="btn  btn-default" th:href="@{/disciplinas/nova}">
+											<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo disciplina</span>
+										</a>
+									</div>
+								</div>							
+							</div>
+							
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<form method="GET" th:object="${disciplinaFilter}">
+								<div class="row">
+									<div class="col-sm-6  form-group">
+										<label for="nomeFilter" class="control-label">Nome</label> 
+										<input id="nomeFilter" type="text" class="form-control" autofocus="autofocus" 
+											size="100" maxlength="100" th:field="*{nome}" placeholder="Pesquisar por nome"/>
+									</div>
+									
+								</div>
+								
+								<!-- /.box-body -->
+								<div class="box-footer">
+									<button class="btn  btn-primary" type="submit">Pesquisar</button>
+								</div>
+							</form>
+						
+							<div class="table-responsive  bw-tabela-simples">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="table-disciplinas-col-nome">
+												Nome
+											</th>
+											<th class="table-disciplinas-col-email">Data criação</th>
+											<th class="table-disciplinas-col-acoes"></th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr th:each="disciplina : ${pagina.conteudo}">
+											<td th:text="${disciplina.nome}">Nome</td>
+											<td th:text="${{disciplina.dataCriacao}}">Login</td>
+											<td class="text-center">
+												<a th:href="@{/disciplinas/{id}(id=${disciplina.id})}" class="btn btn-link btn-xs" 
+													title="Editar" sec:authorize="hasRole('ROLE_EDI_DISCIPLINA')"> 
+													<i class="glyphicon glyphicon-pencil"></i>
+												</a>
+												<a class="btn  btn-link btn-xs js-excluir-btn" title="Excluir"
+													sec:authorize="hasRole('ROLE_EXC_DISCIPLINA')"
+													data:url="@{/disciplinas/{id}(id=${disciplina.id})}" data:objeto="${disciplina.nome}">
+													<i class="glyphicon glyphicon-remove"></i>
+												</a>
+											</td>
+										</tr>
+										<tr th:if="${pagina.vazia}">
+											<td colspan="7">Nenhuma disciplina encontrada</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							<npj:paginacao page="${pagina}" />
+						</div>
+					</div>
+				</div>
+			</div>
+	    </section>		
+	</div>
+	<th:block layout:fragment="javascript-extra">	
+		<script th:src="@{/javascripts/npj.dialogo-excluir.js}"></script>	
+	</th:block>	
+</body>
+</html>

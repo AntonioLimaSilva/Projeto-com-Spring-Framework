@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:npj="http://www.npj.com.br">
+
+<body>
+    <npj:timeLine attrProcesso="${processo}" attrItensAssistido="${itensAssistidosProcesso}"
+		attrItensFuncionario="${itensFuncionariosProcesso}" attrItensDocumento="${itensDocumentosProcesso}"
+		attrItensAcao="${itensAcoesProcesso}" attrItensAluno="${itensAlunosProcesso}" />
+		
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/processo.pesquisa-assistido-ou-aluno.js}"></script>
+		<script th:src="@{/javascripts/npj.dialogo-excluir.js}"></script>
+	</th:block>
+</body>	
+</html>

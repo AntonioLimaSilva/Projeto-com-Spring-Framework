@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:npj="http://www.npj.com.br"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Pesquisa de documentos</title>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Pesquisa de documentos<small>Visualização</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Formulários</a></li>
+				<li class="active">Elementos gerais</li>
+			</ol>
+		</section>
+		
+		<!-- Main content -->
+	    <section class="content">
+	      <div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="aw-page-header-controls">
+										<a class="btn  btn-default" th:href="@{/documentos/novo}">
+											<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo documento</span>
+										</a>
+									</div>
+								</div>							
+							</div>
+							
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<form method="GET" th:object="${documentoFilter}">
+								<div class="row">
+									<div class="col-sm-6  form-group">
+										<label for="nomeFilter" class="control-label">Nome</label> 
+										<input id="nomeFilter" type="text" size="100" maxlength="100" 
+											autofocus="autofocus" class="form-control" th:field="*{nome}" 
+											placeholder="Pesquisar por nome"/>
+									</div>
+									<div class="col-sm-6  form-group">
+										<label for="descricaoFilter" class="control-label">Descrição</label> 
+										<input id="descricaoFilter" size="100" maxlength="100" type="text" class="form-control" 
+											th:field="*{descricao}" placeholder="Pesquisar por descrição" />
+									</div>
+								</div>
+								
+								<!-- /.box-body -->
+								<div class="box-footer">
+									<button class="btn  btn-primary" type="submit">Pesquisar</button>
+								</div>
+							</form>
+						
+							<div class="table-responsive  bw-tabela-simples">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="table-documentos-col-foto"></th>
+											<th class="table-documentos-col-nome">
+												Nome
+											</th>
+											<th class="table-documentos-col-email">Descrição</th>
+											<th class="table-documentos-col-acoes"></th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr th:each="documento : ${pagina.conteudo}">
+											<td class="text-center">
+												<span class="glyphicon glyphicon-folder-open">
+											</td>
+											<td><a th:href="@{/documentos/local/{nome}(nome=${documento.nome})}" target="_blank">[[${documento.nome}]]</a></td>
+											<td th:text="${documento.descricao}">Descrição</td>
+											<td class="text-center">
+												<a class="btn  btn-link  btn-xs" title="Editar"
+													th:href="@{/documentos/{id}(id=${documento.id})}"
+													sec:authorize="hasRole('ROLE_EDI_DOCUMENTO')">
+													<i class="glyphicon glyphicon-pencil"></i>
+												</a>
+												<a class="btn  btn-link  btn-xs js-excluir-btn" title="Excluir"
+													data:url="@{/documentos/{id}(id=${documento.id})}"
+													data:objeto="${documento.nome}"
+													sec:authorize="hasRole('ROLE_EXC_DOCUMENTO')">
+													<i class="glyphicon glyphicon-remove"></i>
+												</a>
+											</td>
+										</tr>
+										<tr th:if="${pagina.vazia}">
+											<td colspan="7">Nenhum documento encontrado</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							<npj:paginacao page="${pagina}" />
+							
+						</div>
+					</div>
+				</div>
+			</div>
+	    </section>		
+	</div>
+	<th:block layout:fragment="javascript-extra">	
+		<script th:src="@{/javascripts/npj.dialogo-excluir.js}"></script>	
+	</th:block>		
+</body>
+</html>
