@@ -7,7 +7,7 @@
             driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
             jdbcUrl="jdbc:sqlserver://localhost;databaseName=npj"
             user="sa"
-            password="*****" 
+            password="kyt32014" 
             initialPoolSize="5" 
             minPoolSize="5"
             maxPoolSize="5" 
