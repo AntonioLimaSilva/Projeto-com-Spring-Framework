@@ -30,3 +30,8 @@ O banco de dados é criado usando um script que é lido pelo flyway
 
 # Sistema de Chat
 Existe um sistema de CHAT dentro do sistema, para os usuários trocarem mensagens ente si
+
+# Usar DB MySql 5.7.23
+
+# Classe DocumentoStorageLocal e FotoStorageLocal
+Pra quem usa Linux ou MAC descomentar Linha dentro do construtor dessas classes
