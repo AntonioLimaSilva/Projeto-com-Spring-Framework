@@ -23,7 +23,8 @@ public class FotoStorageLocal implements FotoStorage {
 	private Path localTemporario;
 	
 	public FotoStorageLocal() {
-		this(FileSystems.getDefault().getPath(System.getProperty("user.home"), "npjfotos"));
+		this(FileSystems.getDefault().getPath(System.getProperty("user.home"), "npjfotos")); //Windows
+		//this(FileSystems.getDefault().getPath(System.getenv("HOME"), ".npjfotos")); // Linux e MAC
 	}
 	
 	public FotoStorageLocal(Path path) {

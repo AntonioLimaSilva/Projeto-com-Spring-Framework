@@ -22,6 +22,7 @@ public class DocumentoStorageLocal implements DocumentoStorage {
 	
 	public DocumentoStorageLocal() {
 		this(FileSystems.getDefault().getPath(System.getProperty("user.home"), "npjdocumentos"));
+		//this(FileSystems.getDefault().getPath(System.getenv("HOME"), ".npjdocumentos")); // Linux e MAC
 	}
 
 	public DocumentoStorageLocal(Path local) {

@@ -18,7 +18,7 @@
 		<java.version>1.8</java.version>
 		<maven-compiler-pluging.version>3.2</maven-compiler-pluging.version>
 		<flyway-maven-plugin.version>4.0.2</flyway-maven-plugin.version>
-		<mssql-jdbc.version>6.1.2.jre8-preview</mssql-jdbc.version>
+		<mysql-connector-java.version>5.1.47</mysql-connector-java.version>
 
 		<!-- Spring MVC -->
 		<spring-framework.version>5.0.2.RELEASE</spring-framework.version>
@@ -89,9 +89,9 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>${flyway-maven-plugin.version}</version>
-				<configuration>
-					<driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
-				</configuration>
+				<!-- <configuration>
+					<driver>com.mysql.jdbc.Driver</driver>
+				</configuration> -->
 			</plugin>
 		</plugins>
 	</build>
@@ -198,11 +198,11 @@
 			<version>${hibernate-c3p0.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- Driver sql server -->
+		<!-- MySQL Driver -->
 		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>${mssql-jdbc.version}</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
 			<scope>compile</scope>
 		</dependency>			
 		<!-- Spring Data JPA -->

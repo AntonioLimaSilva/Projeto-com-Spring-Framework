@@ -14,7 +14,7 @@ public class AgendasImpl implements AgendasQueries {
 
 	@Override
 	public List<AgendaDTO> buscarTodas() {
-		String query = "select new br.com.luciano.npj.dto.AgendaDTO(assistido, dataInicio, dataFim, color) from Agenda where dataInicio >= getDate()";
+		String query = "select new br.com.luciano.npj.dto.AgendaDTO(assistido, dataInicio, dataFim, color) from Agenda where dataInicio >= NOW()";
 		return this.manager.createQuery(query, AgendaDTO.class).getResultList();
 	}
 
