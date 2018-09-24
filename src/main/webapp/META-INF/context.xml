@@ -7,7 +7,7 @@
             driverClass="com.mysql.jdbc.Driver"
             jdbcUrl="jdbc:mysql://127.0.0.1:3306/npj?createDatabaseIfNotExist=true&amp;useSSL=false"
             user="root"
-            password="****" 
+            password="******"
             initialPoolSize="5" 
             minPoolSize="5"
             maxPoolSize="5" 

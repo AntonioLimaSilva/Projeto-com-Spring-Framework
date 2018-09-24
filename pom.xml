@@ -68,7 +68,7 @@
 		<thymeleaf-extras-springsecurity.version>3.0.0.RELEASE</thymeleaf-extras-springsecurity.version>
 
 		<!-- JasperReports -->
-		<jasperreports.version>6.3.0</jasperreports.version>
+		<jasperreports.version>6.1.0</jasperreports.version>
 
 		<!-- JasperReports Fonts -->
 		<jasperreports-fonts.version>6.0.0</jasperreports-fonts.version>
@@ -89,9 +89,9 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>${flyway-maven-plugin.version}</version>
-				<!-- <configuration>
+				<configuration>
 					<driver>com.mysql.jdbc.Driver</driver>
-				</configuration> -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
